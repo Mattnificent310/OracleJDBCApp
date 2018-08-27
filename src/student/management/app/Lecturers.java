@@ -7,6 +7,7 @@ package student.management.app;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -217,7 +218,11 @@ private List<Lecturer> lecturerList = new ArrayList<>();
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Lecturers().setVisible(true);
+                try {
+                    new Lecturers().setVisible(true);
+                } catch (SQLException ex) {
+                    Logger.getLogger(Lecturers.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }

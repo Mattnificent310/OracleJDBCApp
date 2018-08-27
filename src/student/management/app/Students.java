@@ -252,7 +252,11 @@ public class Students extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-                new Students().setVisible(true);
+                try {
+                    new Students().setVisible(true);
+                } catch (SQLException ex) {
+                    Logger.getLogger(Students.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
