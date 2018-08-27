@@ -6,6 +6,7 @@
 package student.management.app;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -15,11 +16,13 @@ import java.util.logging.Logger;
  */
 public class Lecturers extends javax.swing.JFrame {
 private DataAccessLayer dal = new DataAccessLayer();
+private List<Lecturer> lecturerList = new ArrayList<>();
     /**
      * Creates new form Lecturers
      */
-    public Lecturers() {
+    public Lecturers() throws SQLException {
         initComponents();
+        lecturerList = dal.GetLecturers();
     }
 
     /**

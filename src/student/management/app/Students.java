@@ -7,6 +7,8 @@
 package student.management.app;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -15,11 +17,12 @@ import java.util.logging.Logger;
  * @author matt.maree
  */
 public class Students extends javax.swing.JFrame {
-    DataAccessLayer dal = new DataAccessLayer();
-    
+    private DataAccessLayer dal = new DataAccessLayer();
+    private List<Student> studentList = new ArrayList<>();
     /** Creates new form Students */
-    public Students() {
+    public Students() throws SQLException {
         initComponents();
+        studentList = dal.GetStudent();
     }
 
     /** This method is called from within the constructor to
