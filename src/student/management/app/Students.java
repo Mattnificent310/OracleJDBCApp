@@ -84,13 +84,13 @@ public class Students extends javax.swing.JFrame {
 
         jScrollPane5.setViewportView(jTextPane4);
 
-        txtName.setText("jTextField1");
+        txtName.setText("Name");
 
-        txtSurname.setText("jTextField1");
+        txtSurname.setText("Surname");
 
-        txtPhone.setText("jTextField1");
+        txtPhone.setText("Phone");
 
-        txtEmail.setText("jTextField1");
+        txtEmail.setText("Email");
 
         cmbAge.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
