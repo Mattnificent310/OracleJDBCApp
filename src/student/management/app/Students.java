@@ -176,10 +176,10 @@ public class Students extends javax.swing.JFrame {
 
     private void btnInsertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsertActionPerformed
         try {
-            dal.insertStudent(new Student(0,
+           dal.insertStudent(new Student(0,
                                             txtName.getText(), 
                                             txtSurname.getText(), 
-                                            cmbAge.getSelectedItem().toString(),
+                                             cmbAge.getSelectedItem().toString(),
                                             cmbGender.getSelectedItem().toString(),
                                             txtPhone.getText(),txtEmail.getText()));
 // TODO add your handling code here:
