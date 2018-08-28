@@ -5,10 +5,6 @@
  */
 package student.management.app;
 
-/**
- *
- * @author matt.maree
- */
 public class Course {
     private int courseId;
     private String title;

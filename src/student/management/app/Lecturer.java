@@ -5,10 +5,6 @@
  */
 package student.management.app;
 
-/**
- *
- * @author matt.maree
- */
 class Lecturer extends Person{
     
     public Lecturer(int id,String name, String surname, String birthDate, String gender, String phone, String email) {

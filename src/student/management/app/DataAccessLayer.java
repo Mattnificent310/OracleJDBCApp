@@ -11,16 +11,12 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- *
- * @author matt.maree
- */
 public class DataAccessLayer {
 
     public Connection Connect() {
         try {
-            Class.forName("oracle.jdbc.driver.OracleDriver");
-            return DriverManager.getConnection("jdbc:oracle:thin:hr/hr@localhost:1521:orcl", "marline", "oracle");
+            Class.forName("oracle.jdbc.OracleDriver");
+            return DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:ORCL [ [sys as sysdba on MARLINE]", "MARLINE", "oracle");
         } catch (Exception ex) {
             Logger.getLogger(DataAccessLayer.class.getName()).log(Level.SEVERE, null, ex);
         }
