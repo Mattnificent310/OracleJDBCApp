@@ -18,8 +18,8 @@ import java.util.List;
 public class DataAccessLayer {
     public Connection Connect(){
         try {
-            Class.forName("oracle.jdbc.driver.OracleDriver");
-            return DriverManager.getConnection("jdbc:oracle:thin:Marline/Pass123@localhost:1521:xe","system","oracle");
+            Class.forName("oracle");
+            return DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:ORCL [sys as sysdba on Default schema]");
         } catch (Exception ex) {
             Logger.getLogger(DataAccessLayer.class.getName()).log(Level.SEVERE, null, ex);
         }
