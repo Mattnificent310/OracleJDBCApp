@@ -26,10 +26,10 @@ public class DataAccessLayer {
             String mysql = "jdbc:mysql://localhost:3306/studentdb?zeroDateTimeBehavior=convertToNull";
             String myDrivr = "com.mysql.jdbc.Driver";
             String myUser = "root";
-            //Class.forName("oracle.jdbc.driver.OracleDriver");
-            Class.forName(orcDriver);
-            //return DriverManager.getConnection(oracle,orcUser,orcPass);
-            return DriverManager.getConnection(mysql,myUser, "");
+            Class.forName("oracle.jdbc.driver.OracleDriver");
+            //Class.forName(orcDriver);
+            return DriverManager.getConnection(oracle,orcUser,orcPass);
+            //return DriverManager.getConnection(mysql,myUser, "");
         } catch (Exception ex) {
             Logger.getLogger(DataAccessLayer.class.getName()).log(Level.SEVERE, null, ex);
         }
