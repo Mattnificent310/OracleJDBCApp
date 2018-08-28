@@ -184,4 +184,31 @@ public class DataAccessLayer {
         ps.setInt(2, course.getDuration());
         return ps.executeUpdate() > 0;        
     }
+    public boolean deleteStudent(int id) throws SQLException {
+        String sql = "DELETE FROM Students WHERE Student_ID = ?";
+        PreparedStatement ps = Connect().prepareStatement(sql);
+        ps.setInt(0, id);        
+        return ps.executeUpdate() > 0;
+
+    }
+
+    public boolean deleteLecturer(int id) throws SQLException {
+        String sql = "DELETE FROM Lecturers WHERE Lecturer_ID = ?";
+        PreparedStatement ps = Connect().prepareStatement(sql);
+        ps.setInt(0, id);       
+        return ps.executeUpdate() > 0;
+
+    }
+    public boolean deleteSubject(int id) throws SQLException {
+        String sql = "DELETE FROM Subjects WHERE Subject_ID = ?";
+        PreparedStatement ps = Connect().prepareStatement(sql);
+        ps.setInt(0, id);        
+        return ps.executeUpdate() > 0;
+    }
+    public boolean deleteCourse(int id) throws SQLException {
+        String sql = "DELETE FROM Courses WHERE Course_ID = ?";
+        PreparedStatement ps = Connect().prepareStatement(sql);
+        ps.setInt(0, id);
+        return ps.executeUpdate() > 0;        
+    }
 }
