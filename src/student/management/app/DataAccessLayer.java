@@ -28,7 +28,8 @@ public class DataAccessLayer {
             String myUser = "root";
             //Class.forName("oracle.jdbc.driver.OracleDriver");
             Class.forName(orcDriver);
-            return DriverManager.getConnection(oracle,orcUser,orcPass);
+            //return DriverManager.getConnection(oracle,orcUser,orcPass);
+            return DriverManager.getConnection(mysql,myUser, "");
         } catch (Exception ex) {
             Logger.getLogger(DataAccessLayer.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -94,60 +95,65 @@ public class DataAccessLayer {
     }
 
     public Student insertStudent(Student student) throws SQLException {
-        String sql = "INSERT INTO student (Student_Name, Student_Surname, Student_Age, Student_Gender, Student_Phone, Student_Email) VALUES (?, ?, ?, ?, ?, ?)";
-        String lastRow = "SELECT TOP 1 FROM Students ORDER BY DESC";
+        String sql = "INSERT INTO student  VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String lastRow = "SELECT * FROM students ORDER BY STUDENT_ID DESC LIMIT 1";
         PreparedStatement ps = Connect().prepareStatement(sql);
-        ps.setString(1, student.getName());
-        ps.setString(2, student.getSurname());
-        ps.setString(3, student.getBirthDate());
+        ps.setInt(1, 0);
+        ps.setString(2, student.getName());
+        ps.setString(3, student.getSurname());
         ps.setString(4, student.getGender());
-        ps.setString(5, student.getPhone());
-        ps.setString(6, student.getEmail());
+        ps.setString(5, student.getBirthDate());
+        ps.setString(6, student.getPhone());
+        ps.setString(7, student.getEmail());
         ps.executeUpdate();
         ResultSet rs = ps.executeQuery(lastRow);
-        return new Student(rs.getInt(0), rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6));
+        return new Student(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7));
 
     }
 
     public Lecturer insertLecturer(Lecturer lecturer) throws SQLException {
-        String sql = "INSERT INTO lecturers (Lecturer_Name, Lecturer_Surname, Lecturer_Age, Lecturer_Gender, Lecturer_Phone, Lecturer_Email) VALUES (?, ?, ?, ?, ?, ?)";
-        String lastRow = "SELECT TOP 1 FROM Lecturers ORDER BY DESC";
+        String sql = "INSERT INTO lecturers VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String lastRow = "SELECT * FROM lecturers ORDER BY LEC_ID DESC LIMIT 1";
         PreparedStatement ps = Connect().prepareStatement(sql);
-        ps.setString(1, lecturer.getName());
-        ps.setString(2, lecturer.getSurname());
-        ps.setString(3, lecturer.getBirthDate());
+        ps.setInt(1, 0);
+        ps.setString(2, lecturer.getName());
+        ps.setString(3, lecturer.getSurname());
         ps.setString(4, lecturer.getGender());
-        ps.setString(5, lecturer.getPhone());
-        ps.setString(6, lecturer.getEmail());
+        ps.setString(5, lecturer.getBirthDate());
+        ps.setString(6, lecturer.getPhone());
+        ps.setString(7, lecturer.getEmail());        
         ps.executeUpdate();
         ResultSet rs = ps.executeQuery(lastRow);
-        return new Lecturer(rs.getInt(0), rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6));
+        System.out.println(rs.next());
+        return new Lecturer(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7));
 
     }
 
     public Subject insertSubject(Subject subject) throws SQLException {
-        String sql = "INSERT INTO subjects (Subject_Title, Subject_Weigt, Subject_Duration) VALUES (?, ?, ?)";
-        String lastRow = "SELECT TOP 1 FROM Subjects ORDER BY DESC";
+        String sql = "INSERT INTO subjects VALUES (?, ?, ?)";
+        String lastRow = "SELECT * FROM subjects ORDER BY SUBJECT_ID DESC LIMIT 1";
         PreparedStatement ps = Connect().prepareStatement(sql);
+        ps.setInt(0, 0);
         ps.setString(1, subject.getName());
         ps.setInt(2, subject.getWeight());
         ps.setInt(3, subject.getDuration());
         ps.executeUpdate();
         ResultSet rs = ps.executeQuery(lastRow);
-        return new Subject(rs.getInt(0), rs.getString(1), rs.getInt(2), rs.getInt(3));
+        return new Subject(rs.getInt(1), rs.getString(2), rs.getInt(3), rs.getInt(4));
 
     }
 
     public Course insertCourse(Course course) throws SQLException {
-        String sql = "INSERT INTO courses (Course_Title, Course_Weigt, Course_Duration) VALUES (?, ?, ?)";
-        String lastRow = "SELECT TOP 1 FROM Courses ORDER BY DESC";
-        PreparedStatement ps = Connect().prepareStatement(sql);
-        ps.setString(1, course.getTitle());
-        ps.setInt(2, course.getWeight());
-        ps.setInt(3, course.getDuration());
+        String sql = "INSERT INTO courses VALUES (?, ?, ?, ?)";
+        String lastRow = "SELECT * FROM courses ORDER BY COURSE_ID DESC LIMIT 1";
+        PreparedStatement ps = Connect().prepareStatement(sql);        
+        ps.setInt(1, 0);
+        ps.setString(2, course.getTitle());
+        ps.setInt(3, course.getWeight());
+        ps.setInt(4, course.getDuration());
         ps.executeUpdate();
         ResultSet rs = ps.executeQuery(lastRow);
-        return new Course(rs.getInt(0), rs.getString(1), rs.getInt(2), rs.getInt(3));
+        return new Course(rs.getInt(1), rs.getString(2), rs.getInt(3), rs.getInt(4));
 
     }
 
