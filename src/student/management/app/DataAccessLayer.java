@@ -32,13 +32,13 @@ public class DataAccessLayer {
         Statement st = Connect().createStatement();
         ResultSet rs = st.executeQuery("SELECT * FROM Students");
         while (rs.next()) {
-            studentList.add(new Student(rs.getInt(0),
-                    rs.getString(1),
+            studentList.add(new Student(rs.getInt(1),
                     rs.getString(2),
                     rs.getString(3),
                     rs.getString(4),
                     rs.getString(5),
-                    rs.getString(6)));
+                    rs.getString(6),
+                    rs.getString(7)));
         }
         return studentList;
     }
@@ -48,13 +48,13 @@ public class DataAccessLayer {
         Statement st = Connect().createStatement();
         ResultSet rs = st.executeQuery("SELECT * FROM Lecturers");
         while (rs.next()) {
-            lecturerList.add(new Lecturer(rs.getInt(0),
-                    rs.getString(1),
+            lecturerList.add(new Lecturer(rs.getInt(1),
                     rs.getString(2),
                     rs.getString(3),
                     rs.getString(4),
                     rs.getString(5),
-                    rs.getString(6)));
+                    rs.getString(6),
+                    rs.getString(7)));
         }
         return lecturerList;
     }
@@ -64,10 +64,10 @@ public class DataAccessLayer {
         Statement st = Connect().createStatement();
         ResultSet rs = st.executeQuery("SELECT * FROM Subjects");
         while (rs.next()) {
-            subjectList.add(new Subject(rs.getInt(0),
-                    rs.getString(1),
-                    rs.getInt(2),
-                    rs.getInt(3)));
+            subjectList.add(new Subject(rs.getInt(1),
+                    rs.getString(2),
+                    rs.getInt(3),
+                    rs.getInt(4)));
         }
         return subjectList;
     }
@@ -77,10 +77,10 @@ public class DataAccessLayer {
         Statement st = Connect().createStatement();
         ResultSet rs = st.executeQuery("SELECT * FROM Courses");
         while (rs.next()) {
-            courseList.add(new Course(rs.getInt(0),
-                    rs.getString(1),
-                    rs.getInt(2),
-                    rs.getInt(3)));
+            courseList.add(new Course(rs.getInt(1),
+                    rs.getString(2),
+                    rs.getInt(3),
+                    rs.getInt(4)));
         }
         return courseList;
     }
