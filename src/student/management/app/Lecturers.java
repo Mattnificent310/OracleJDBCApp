@@ -23,7 +23,7 @@ private List<Lecturer> lecturerList = new ArrayList<>();
      */
     public Lecturers() throws SQLException {
         initComponents();
-        lecturerList = dal.GetLecturers();
+        lecturerList = dal.getLecturers(0);
     }
 
     /**

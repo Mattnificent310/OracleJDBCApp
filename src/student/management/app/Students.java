@@ -22,7 +22,7 @@ public class Students extends javax.swing.JFrame {
     /** Creates new form Students */
     public Students() throws SQLException {
         initComponents();
-        studentList = dal.GetStudent();
+        studentList = dal.getStudents(0);
     }
 
     /** This method is called from within the constructor to

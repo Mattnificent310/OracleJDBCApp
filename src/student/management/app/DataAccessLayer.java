@@ -36,10 +36,10 @@ public class DataAccessLayer {
         return null;
     }
 
-    public List<Student> GetStudent() throws SQLException {
+    public List<Student> getStudents(int id) throws SQLException {
         List<Student> studentList = new ArrayList<>();
         Statement st = Connect().createStatement();
-        ResultSet rs = st.executeQuery("SELECT * FROM student");
+        ResultSet rs = st.executeQuery(String.format("SELECT * FROM student %s", (id == 0 ? "" : "WHERE STUDENT_ID = " + id)));
         while (rs.next()) {
             studentList.add(new Student(rs.getInt(1),
                     rs.getString(2),
@@ -52,10 +52,10 @@ public class DataAccessLayer {
         return studentList;
     }
 
-    public List<Lecturer> GetLecturers() throws SQLException {
+    public List<Lecturer> getLecturers(int id) throws SQLException {
         List<Lecturer> lecturerList = new ArrayList<>();
         Statement st = Connect().createStatement();
-        ResultSet rs = st.executeQuery("SELECT * FROM lecturers");
+        ResultSet rs = st.executeQuery(String.format("SELECT * FROM lecturers %s", (id == 0 ? "" : "WHERE LEC_ID = " + id)));
         while (rs.next()) {
             lecturerList.add(new Lecturer(rs.getInt(1),
                     rs.getString(2),
@@ -68,10 +68,10 @@ public class DataAccessLayer {
         return lecturerList;
     }
 
-    public List<Subject> GetSubjects() throws SQLException {
+    public List<Subject> getSubjects(int id) throws SQLException {
         List<Subject> subjectList = new ArrayList<>();
         Statement st = Connect().createStatement();
-        ResultSet rs = st.executeQuery("SELECT * FROM subjects");
+        ResultSet rs = st.executeQuery(String.format("SELECT * FROM subjects %s", (id == 0 ? "" : "WHERE SUBJECT_ID = " + id)));
         while (rs.next()) {
             subjectList.add(new Subject(rs.getInt(1),
                     rs.getString(2),
@@ -81,10 +81,10 @@ public class DataAccessLayer {
         return subjectList;
     }
 
-    public List<Course> GetCourses() throws SQLException {
+    public List<Course> getCourses(int id) throws SQLException {
         List<Course> courseList = new ArrayList<>();
         Statement st = Connect().createStatement();
-        ResultSet rs = st.executeQuery("SELECT * FROM courses");
+        ResultSet rs = st.executeQuery(String.format("SELECT * FROM courses %s", (id == 0 ? "" : "WHERE COURSE_ID = " + id)));
         while (rs.next()) {
             courseList.add(new Course(rs.getInt(1),
                     rs.getString(2),
@@ -93,7 +93,18 @@ public class DataAccessLayer {
         }
         return courseList;
     }
-
+public List<Hostel> getHostels(int id) throws SQLException {
+        List<Hostel> hostelList = new ArrayList<>();
+        Statement st = Connect().createStatement();
+        ResultSet rs = st.executeQuery(String.format("SELECT * FROM hostel %s", (id == 0 ? "" : "WHERE HOSTEL_ID = " + id)));
+        while (rs.next()) {
+            hostelList.add(new Hostel(rs.getInt(1),
+                    rs.getString(2),
+                    rs.getString(3),
+                    rs.getInt(4)));
+        }
+        return hostelList;
+    }
     public Student insertStudent(Student student) throws SQLException {
         String sql = "INSERT INTO student  VALUES (?, ?, ?, ?, ?, ?, ?)";
         String lastRow = "SELECT * FROM students ORDER BY STUDENT_ID DESC LIMIT 1";
@@ -156,9 +167,87 @@ public class DataAccessLayer {
         return new Course(rs.getInt(1), rs.getString(2), rs.getInt(3), rs.getInt(4));
 
     }
+public Hostel insertHostel(Hostel hostel) throws SQLException {
+        String sql = "INSERT INTO hostel VALUES (?, ?, ?, ?)";
+        String lastRow = "SELECT * FROM hostel ORDER BY HOSTEL_ID DESC LIMIT 1";
+        PreparedStatement ps = Connect().prepareStatement(sql);        
+        ps.setInt(1, 0);
+        ps.setString(2, hostel.getName());
+        ps.setString(3, hostel.getType());
+        ps.setInt(4, hostel.getCapacity());
+        ps.executeUpdate();
+        ResultSet rs = ps.executeQuery(lastRow);
+        return new Hostel(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4));
 
+    }
+public Assessment insertAssessment(Assessment assessment) throws SQLException {
+        String sql = "INSERT INTO assessments VALUES (?, ?, ?, ?)";
+        String lastRow = "SELECT * FROM assessments ORDER BY ASSESS_ID DESC LIMIT 1";
+        PreparedStatement ps = Connect().prepareStatement(sql);        
+        ps.setInt(1, 0);
+        ps.setString(2, assessment.getType());
+        ps.setString(3, assessment.getDate());
+        ps.setString(4, assessment.getCriteria());        
+        ps.setInt(5, assessment.getSubject().getId());
+        ps.executeUpdate();
+        ResultSet rs = ps.executeQuery(lastRow);
+        return new Assessment(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), getSubjects(rs.getInt(5)).get(0));
+
+    }
+public Classroom insertClassroom(Classroom classroom) throws SQLException {
+        String sql = "INSERT INTO classroom VALUES (?, ?, ?, ?)";
+        String lastRow = "SELECT * FROM classroom ORDER BY CLASS_ID DESC LIMIT 1";
+        PreparedStatement ps = Connect().prepareStatement(sql);        
+        ps.setInt(1, 0);
+        ps.setString(2, classroom.getName());
+        ps.setInt(3, classroom.getCapacity());
+        ps.executeUpdate();
+        ResultSet rs = ps.executeQuery(lastRow);
+        return new Classroom(rs.getInt(1), rs.getString(2), rs.getInt(3));
+
+    }
+public Room insertRoom(Room room) throws SQLException {
+        String sql = "INSERT INTO classroom VALUES (?, ?, ?, ?)";
+        String lastRow = "SELECT * FROM classroom ORDER BY CLASS_ID DESC LIMIT 1";
+        PreparedStatement ps = Connect().prepareStatement(sql);        
+        ps.setInt(1, 0);
+        ps.setInt(2, room.getCapacity());
+        ps.setString(3, room.getLayout());
+        ps.setInt(3, room.getHostel().getHostelId());
+        ps.executeUpdate();
+        ResultSet rs = ps.executeQuery(lastRow);
+        return new Room(rs.getInt(1), rs.getInt(2), rs.getString(3), getHostels(rs.getInt(4)).get(0));
+
+    }
+public Session insertSession(Session session) throws SQLException {
+        String sql = "INSERT INTO session VALUES (?, ?, ?, ?)";
+        String lastRow = "SELECT * FROM session ORDER BY CLASS_ID DESC LIMIT 1";
+        PreparedStatement ps = Connect().prepareStatement(sql);        
+        ps.setInt(1, 0);
+        ps.setString(2, session.getType());
+        ps.setInt(3, session.getDuration());
+        ps.executeUpdate();
+        ResultSet rs = ps.executeQuery(lastRow);
+        return new Session(rs.getInt(1), rs.getString(2), rs.getInt(3));
+
+    }
+public Mentorship insertMentorship(Mentorship mentor) throws SQLException {
+        String sql = "INSERT INTO mentorship VALUES (?, ?, ?, ?)";
+        String lastRow = "SELECT * FROM mentorship ORDER BY MENT_ID DESC LIMIT 1";
+        PreparedStatement ps = Connect().prepareStatement(sql);        
+        ps.setInt(1, 0);
+        ps.setString(2, mentor.getType());
+        ps.setInt(3, mentor.getLevel());
+        ps.setString(4, mentor.getResponsibility());
+        ps.setString(5, mentor.getCriteria());
+        ps.setInt(6, mentor.getStudent().getId());
+        ps.executeUpdate();
+        ResultSet rs = ps.executeQuery(lastRow);
+        return new Mentorship(rs.getInt(1), rs.getString(2), rs.getInt(3), rs.getString(4), rs.getString(5), getStudents(rs.getInt(6)).get(0));
+
+    }
     public boolean updateStudent(Student student) throws SQLException {
-        String sql = "UPDATE Students SET Student_Name = ?, Student_Surname = ?, Student_Age = ?, Student_Gender = ?, Student_Phone = ?, Student_Email = ?";
+        String sql = "UPDATE student SET Student_Name = ?, Student_Surname = ?, Student_Age = ?, Student_Gender = ?, Student_Phone = ?, Student_Email = ?";
         PreparedStatement ps = Connect().prepareStatement(sql);
         ps.setString(1, student.getName());
         ps.setString(2, student.getSurname());
@@ -171,7 +260,7 @@ public class DataAccessLayer {
     }
 
     public boolean updateLecturer(Lecturer lecturer) throws SQLException {
-        String sql = "UPDATE Lecturers SET Lecturer_Name = ?, Lecturer_Surname = ?, Lecturer_Age = ?, Lecturer_Gender = ?, Lecturer_Phone = ?, Lecturer_Email = ?";
+        String sql = "UPDATE lecturers SET Lecturer_Name = ?, Lecturer_Surname = ?, Lecturer_Age = ?, Lecturer_Gender = ?, Lecturer_Phone = ?, Lecturer_Email = ?";
         PreparedStatement ps = Connect().prepareStatement(sql);
         ps.setString(1, lecturer.getName());
         ps.setString(2, lecturer.getSurname());
@@ -183,7 +272,7 @@ public class DataAccessLayer {
 
     }
     public boolean updateSubject(Subject subject) throws SQLException {
-        String sql = "UPDATE Subjects SET Subject_Title = ?, Subject_Weigt = ?, Subject_Duration = ?";
+        String sql = "UPDATE subjects SET Subject_Title = ?, Subject_Weigt = ?, Subject_Duration = ?";
         PreparedStatement ps = Connect().prepareStatement(sql);
         ps.setString(1, subject.getName());
         ps.setInt(2, subject.getWeight());
@@ -191,7 +280,7 @@ public class DataAccessLayer {
         return ps.executeUpdate() > 0;
     }
     public boolean updateCourse(Course course) throws SQLException {
-        String sql = "UPDATE Courses SET Course_Title = ?, Course_Weigt = ?, Course_Duration = ?";
+        String sql = "UPDATE courses SET Course_Title = ?, Course_Weigt = ?, Course_Duration = ?";
         PreparedStatement ps = Connect().prepareStatement(sql);
         ps.setString(1, course.getTitle());
         ps.setInt(2, course.getWeight());
@@ -199,7 +288,7 @@ public class DataAccessLayer {
         return ps.executeUpdate() > 0;        
     }
     public boolean deleteStudent(int id) throws SQLException {
-        String sql = "DELETE FROM Students WHERE Student_ID = ?";
+        String sql = "DELETE FROM student WHERE STUDENT_ID = ?";
         PreparedStatement ps = Connect().prepareStatement(sql);
         ps.setInt(1, id);        
         return ps.executeUpdate() > 0;
@@ -207,20 +296,50 @@ public class DataAccessLayer {
     }
 
     public boolean deleteLecturer(int id) throws SQLException {
-        String sql = "DELETE FROM Lecturers WHERE Lecturer_ID = ?";
+        String sql = "DELETE FROM lecturers WHERE LECTURER_ID = ?";
         PreparedStatement ps = Connect().prepareStatement(sql);
         ps.setInt(1, id);       
         return ps.executeUpdate() > 0;
 
     }
     public boolean deleteSubject(int id) throws SQLException {
-        String sql = "DELETE FROM Subjects WHERE Subject_ID = ?";
+        String sql = "DELETE FROM subjects WHERE SUBJECT_ID = ?";
         PreparedStatement ps = Connect().prepareStatement(sql);
         ps.setInt(1, id);        
         return ps.executeUpdate() > 0;
     }
     public boolean deleteCourse(int id) throws SQLException {
-        String sql = "DELETE FROM Courses WHERE Course_ID = ?";
+        String sql = "DELETE FROM courses WHERE COURSE_ID = ?";
+        PreparedStatement ps = Connect().prepareStatement(sql);
+        ps.setInt(1, id);
+        return ps.executeUpdate() > 0;        
+    }
+    public boolean deleteHostel(int id) throws SQLException {
+        String sql = "DELETE FROM hostel WHERE HOSTELe_ID = ?";
+        PreparedStatement ps = Connect().prepareStatement(sql);
+        ps.setInt(1, id);
+        return ps.executeUpdate() > 0;        
+    }
+    public boolean deleteAssessment(int id) throws SQLException {
+        String sql = "DELETE FROM assessments WHERE ASSESS_ID = ?";
+        PreparedStatement ps = Connect().prepareStatement(sql);
+        ps.setInt(1, id);
+        return ps.executeUpdate() > 0;        
+    }
+    public boolean deleteClassroom(int id) throws SQLException {
+        String sql = "DELETE FROM classroom WHERE CLASS_ID = ?";
+        PreparedStatement ps = Connect().prepareStatement(sql);
+        ps.setInt(1, id);
+        return ps.executeUpdate() > 0;        
+    }
+    public boolean deleteRoom(int id) throws SQLException {
+        String sql = "DELETE FROM rooms WHERE ROOM_ID = ?";
+        PreparedStatement ps = Connect().prepareStatement(sql);
+        ps.setInt(1, id);
+        return ps.executeUpdate() > 0;        
+    }
+    public boolean deleteMentorship(int id) throws SQLException {
+        String sql = "DELETE FROM mentorship WHERE MENT_ID = ?";
         PreparedStatement ps = Connect().prepareStatement(sql);
         ps.setInt(1, id);
         return ps.executeUpdate() > 0;        
