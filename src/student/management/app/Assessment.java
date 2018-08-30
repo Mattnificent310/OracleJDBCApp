@@ -5,10 +5,6 @@
  */
 package student.management.app;
 
-/**
- *
- * @author matt.maree
- */
 public class Assessment {
     private int assessId;
     private String type;

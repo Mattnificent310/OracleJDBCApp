@@ -39,6 +39,10 @@ private List<Lecturer> lecturerList = new ArrayList<>();
         entityManager = java.beans.Beans.isDesignTime() ? null : javax.persistence.Persistence.createEntityManagerFactory("studentdb?zeroDateTimeBehavior=convertToNullPU").createEntityManager();
         lecturers_1Query = java.beans.Beans.isDesignTime() ? null : entityManager.createQuery("SELECT l FROM Lecturers_1 l");
         lecturers_1List = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : lecturers_1Query.getResultList();
+        lecturers_1Query1 = java.beans.Beans.isDesignTime() ? null : entityManager.createQuery("SELECT l FROM Lecturers_1 l");
+        lecturers_1List1 = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : lecturers_1Query1.getResultList();
+        lecturers_1Query2 = java.beans.Beans.isDesignTime() ? null : entityManager.createQuery("SELECT l FROM Lecturers_1 l");
+        lecturers_1List2 = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : lecturers_1Query2.getResultList();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         txtName = new javax.swing.JTextField();
@@ -51,10 +55,11 @@ private List<Lecturer> lecturerList = new ArrayList<>();
         btnUpdate = new javax.swing.JButton();
         btnDelete = new javax.swing.JButton();
         LecturerId = new javax.swing.JLabel();
+        LecId = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, lecturers_1List, jTable1);
+        org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, lecturers_1List2, jTable1);
         org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${lecId}"));
         columnBinding.setColumnName("Lec Id");
         columnBinding.setColumnClass(Integer.class);
@@ -66,7 +71,7 @@ private List<Lecturer> lecturerList = new ArrayList<>();
         columnBinding.setColumnClass(String.class);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${lecGender}"));
         columnBinding.setColumnName("Lec Gender");
-        columnBinding.setColumnClass(Character.class);
+        columnBinding.setColumnClass(String.class);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${lecAge}"));
         columnBinding.setColumnName("Lec Age");
         columnBinding.setColumnClass(Integer.class);
@@ -126,6 +131,9 @@ private List<Lecturer> lecturerList = new ArrayList<>();
         LecturerId.setFocusable(false);
         LecturerId.setOpaque(true);
 
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, jTable1, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.lecId}"), LecId, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        bindingGroup.addBinding(binding);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -159,6 +167,10 @@ private List<Lecturer> lecturerList = new ArrayList<>();
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane1)
                         .addContainerGap())))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(LecId)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -182,7 +194,8 @@ private List<Lecturer> lecturerList = new ArrayList<>();
                     .addComponent(btnDelete, javax.swing.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE)
                     .addComponent(cmbGender)
                     .addComponent(cmbAge))
-                .addContainerGap(133, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 133, Short.MAX_VALUE)
+                .addComponent(LecId))
         );
 
         bindingGroup.bind();
@@ -195,7 +208,7 @@ private List<Lecturer> lecturerList = new ArrayList<>();
         dal.insertLecturer(new Lecturer(0,
                 txtName.getText(),
                 txtSurname.getText(),
-                cmbAge.getSelectedItem().toString(),
+                Integer.parseInt(cmbAge.getSelectedItem().toString()),
                 cmbGender.getSelectedItem().toString(),
                 txtPhone.getText(),txtEmail.getText()));
         // TODO add your handling code here:
@@ -207,10 +220,10 @@ private List<Lecturer> lecturerList = new ArrayList<>();
 
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
     try {
-        dal.updateLecturer(new Lecturer(Integer.parseInt(LecturerId.getText()),
+        dal.updateLecturer(new Lecturer(Integer.parseInt(LecId.getText()),
                 txtName.getText(),
                 txtSurname.getText(),
-                cmbAge.getSelectedItem().toString(),
+                Integer.parseInt(cmbAge.getSelectedItem().toString()),
                 cmbGender.getSelectedItem().toString(),
                 txtPhone.getText(),txtEmail.getText()));
         // TODO add your handling code here:
@@ -260,6 +273,7 @@ private List<Lecturer> lecturerList = new ArrayList<>();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel LecId;
     private javax.swing.JLabel LecturerId;
     private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnInsert;
@@ -270,7 +284,11 @@ private List<Lecturer> lecturerList = new ArrayList<>();
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private java.util.List<student.management.app.Lecturers_1> lecturers_1List;
+    private java.util.List<student.management.app.Lecturers_1> lecturers_1List1;
+    private java.util.List<student.management.app.Lecturers_1> lecturers_1List2;
     private javax.persistence.Query lecturers_1Query;
+    private javax.persistence.Query lecturers_1Query1;
+    private javax.persistence.Query lecturers_1Query2;
     private javax.swing.JTextField txtEmail;
     private javax.swing.JTextField txtName;
     private javax.swing.JTextField txtPhone;

@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package student.management.app;
 
 import java.beans.PropertyChangeListener;
@@ -19,10 +15,6 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-/**
- *
- * @author matt.maree
- */
 @Entity
 @Table(name = "lecturers", catalog = "studentdb", schema = "")
 @NamedQueries({
@@ -52,7 +44,7 @@ public class Lecturers_1 implements Serializable {
     @Column(name = "LEC_SURNAME")
     private String lecSurname;
     @Column(name = "LEC_GENDER")
-    private Character lecGender;
+    private String lecGender;
     @Basic(optional = false)
     @Column(name = "LEC_AGE")
     private int lecAge;
@@ -109,12 +101,12 @@ public class Lecturers_1 implements Serializable {
         changeSupport.firePropertyChange("lecSurname", oldLecSurname, lecSurname);
     }
 
-    public Character getLecGender() {
+    public String getLecGender() {
         return lecGender;
     }
 
-    public void setLecGender(Character lecGender) {
-        Character oldLecGender = this.lecGender;
+    public void setLecGender(String lecGender) {
+        String oldLecGender = this.lecGender;
         this.lecGender = lecGender;
         changeSupport.firePropertyChange("lecGender", oldLecGender, lecGender);
     }

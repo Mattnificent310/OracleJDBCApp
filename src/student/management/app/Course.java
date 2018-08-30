@@ -8,7 +8,6 @@ package student.management.app;
 public class Course {
     private int courseId;
     private String title;
-    private int weight;
     private int duration;
 
     public int getCourseId() {
@@ -27,13 +26,7 @@ public class Course {
         this.title = title;
     }
 
-    public int getWeight() {
-        return weight;
-    }
-
-    public void setWeight(int weight) {
-        this.weight = weight;
-    }
+    
 
     public int getDuration() {
         return duration;
@@ -43,10 +36,9 @@ public class Course {
         this.duration = duration;
     }
 
-    public Course(int courseId, String title, int weight, int duration) {
+    public Course(int courseId, String title, int duration) {
         this.courseId = courseId;
         this.title = title;
-        this.weight = weight;
         this.duration = duration;
     }
     

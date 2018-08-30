@@ -5,10 +5,6 @@
  */
 package student.management.app;
 
-/**
- *
- * @author matt.maree
- */
 public class Mentorship {
     private int mentorId;
     private String type;

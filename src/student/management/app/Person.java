@@ -10,7 +10,7 @@ public abstract class Person {
     private int id;
     private String name;
     private String surname;
-    private String birthDate;
+    private int birthDate;
     private String gender;
     private String phone;
     private String email;
@@ -39,11 +39,11 @@ public abstract class Person {
         this.surname = surname;
     }
 
-    public String getBirthDate() {
+    public int getBirthDate() {
         return birthDate;
     }
 
-    public void setBirthDate(String birthDate) {
+    public void setBirthDate(int birthDate) {
         this.birthDate = birthDate;
     }
 
@@ -71,7 +71,7 @@ public abstract class Person {
         this.email = email;
     }
 
-    public Person(int id, String name, String surname, String birthDate, String gender, String phone, String email) {
+    public Person(int id, String name, String surname, int birthDate, String gender, String phone, String email) {
         this.id = id;
         this.name = name;
         this.surname = surname;

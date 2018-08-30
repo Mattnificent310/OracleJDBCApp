@@ -5,10 +5,6 @@
  */
 package student.management.app;
 
-/**
- *
- * @author matt.maree
- */
 public class Hostel {
     private int hostelId;
     private String name;
